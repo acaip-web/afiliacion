@@ -1,5 +1,5 @@
 //Confirmando el enlace
-console.log("JS enlazado");
+console.log("JS enlazado 001");
 
 alert("Ahora si");
 

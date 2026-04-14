@@ -345,7 +345,7 @@
                     </div>
                 </div>
                 <!-- ==================== FOTO DEL DNI (IMÁGENES + PDF) ==================== -->
-                <div class="mt-12">
+                <!--<div class="mt-12">
                     <h2 class="section-title">Foto del DNI / NIE *</h2>
                     <p class="text-sm text-gray-600 mb-4">
                         Sube una foto clara del anverso de tu DNI o el documento completo (JPG, PNG o PDF - máx. 5MB)
@@ -362,7 +362,7 @@
                             <p class="text-sm text-gray-500">JPG, PNG o PDF • Máximo 5 MB</p>
                         </div>
 
-                        <!-- Vista previa -->
+                        <!-- Vista previa --><!--
                         <div id="preview-area" class="hidden w-full">
                             <div id="preview-container" class="mx-auto max-w-md"></div>
                             
@@ -381,9 +381,9 @@
 
                     <input type="hidden" name="foto_dni_base64" id="foto-dni-base64">
                     <input type="hidden" name="foto_dni_nombre" id="foto-dni-nombre">
-                </div>
+                </div>-->
                 <!-- ==================== CAMPO DE FIRMA DIGITAL ==================== -->
-                <div class="mt-12">
+                <!--<div class="mt-12">
                     <h2 class="section-title">Firma del solicitante *</h2>
                     <p class="text-sm text-gray-600 mb-4">Dibuja tu firma con el ratón o con el dedo (en móvil)</p>
                     
@@ -405,11 +405,11 @@
                     </div>
 
                     <!-- Campo oculto donde se guardará la firma en base64 -->
-                    <input type="hidden" name="firma" id="firma-data" required>
+                    <!--<input type="hidden" name="firma" id="firma-data" required>
                 </div>
                 <div class="mt-6 text-xs text-gray-600 px-2">
                 <!-- CHECKBOX LOPD / Consentimiento -->
-                <div class="mt-10 pt-8 border-t border-gray-200">
+                <!--<div class="mt-10 pt-8 border-t border-gray-200">
                     <label class="flex items-start gap-3 cursor-pointer">
                         <input type="checkbox" 
                             name="acepta_privacidad" 
@@ -725,7 +725,7 @@
         <script>
         
         // ==================== FIRMA DIGITAL CORREGIDA ====================
-
+    /*
             let signaturePad;
 
             document.addEventListener('DOMContentLoaded', () => {
@@ -775,11 +775,11 @@
                         saveSignature();
                     }
                 });
-            });
+            });*/
         </script>
         // ==================== FOTO DEL DNI - SOPORTE PARA PDF ====================
         <script>
-        
+            /*
             const dropZone = document.getElementById('drop-zone');
             const fileInput = document.getElementById('foto-dni');
             const uploadContent = document.getElementById('upload-content');
@@ -847,7 +847,7 @@
                 nombreInput.value = '';
                 uploadContent.classList.remove('hidden');
                 previewArea.classList.add('hidden');
-            });
+            });*/
         </script>
     </body>
 </html>

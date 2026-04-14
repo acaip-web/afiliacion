@@ -1,3 +1,6 @@
+//Confirmando el enlace
+console.log("JS enlazado");
+
 // Lógica para mostrar el apartado correspondiente
   const radios = document.querySelectorAll('input[name="tipo_personal"]');
   const funcDiv = document.getElementById('grupo-funcionario');

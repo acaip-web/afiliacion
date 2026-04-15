@@ -366,9 +366,7 @@ async function enviar() {
       method: "POST",
       body: JSON.stringify(data)
       });
-      //dejar solo en desarrollo**************************************
-      //alert("PRUEBA 1: Guardado en Google Sheets");
-
+      console.log("GS_OK"
   } catch (error) {
       console.error(error);
       alert("Error");

@@ -251,3 +251,71 @@ async function enviar() {
       alert("Error");
   }
 }
+// FIRMA ELECTRÓNICA
+let signaturePad;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('signature-canvas');
+    
+    signaturePad = new SignaturePad(canvas, {
+        backgroundColor: '#ffffff',
+        penColor: '#1e40af',
+        minWidth: 1.0,
+        maxWidth: 3.0,
+        throttle: 0,           // ← mejor para móviles
+        velocityFilterWeight: 0.7
+    });
+
+    // Redimensionar canvas correctamente (importante para móviles)
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(ratio, ratio);
+        signaturePad.clear();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // ====================== PREVENIR SCROLL EN MÓVIL ======================
+    function preventScroll(e) {
+        if (e.touches && e.touches.length > 0) {
+            e.preventDefault();   // ← Esto es clave
+        }
+    }
+
+    // Aplicar preventDefault mientras se dibuja
+    canvas.addEventListener('touchstart', preventScroll, { passive: false });
+    canvas.addEventListener('touchmove', preventScroll, { passive: false });
+
+    // ====================== GUARDAR FIRMA ======================
+    function saveSignature() {
+        if (!signaturePad.isEmpty()) {
+            const base64Firma = signaturePad.toDataURL('image/png');
+            document.getElementById('firma-data').value = base64Firma;
+            console.log("✅ Firma guardada (longitud:", base64Firma.length, ")");
+        } else {
+            document.getElementById('firma-data').value = '';
+        }
+    }
+
+    // Usar el evento oficial de SignaturePad (más fiable)
+    signaturePad.addEventListener("endStroke", saveSignature);
+
+    // Botones
+    document.getElementById('clear-signature').addEventListener('click', () => {
+        signaturePad.clear();
+        document.getElementById('firma-data').value = '';
+    });
+
+    document.getElementById('undo-signature').addEventListener('click', () => {
+        const data = signaturePad.toData();
+        if (data.length > 0) {
+            data.pop();
+            signaturePad.fromData(data);
+            saveSignature();
+        }
+    });
+});

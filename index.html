@@ -386,7 +386,7 @@
                     <input type="hidden" name="foto_dni_nombre" id="foto-dni-nombre">
                 </div>-->
                 <!-- ==================== CAMPO DE FIRMA DIGITAL ==================== -->
-                <!--<div class="mt-12">
+                    <div class="mt-12">
                     <h2 class="section-title">Firma del solicitante *</h2>
                     <p class="text-sm text-gray-600 mb-4">Dibuja tu firma con el ratón o con el dedo (en móvil)</p>
                     
@@ -395,6 +395,8 @@
                                 class="w-full touch-action-none"
                                 style="height: 220px; width: 100%;"></canvas>
                     </div>
+                    <!-- Campo oculto donde se guardará la firma en base64 -->
+                        <input type="hidden" name="firma" id="firma-data" required>
 
                     <div class="flex gap-4 mt-4">
                         <button type="button" id="clear-signature"
@@ -407,8 +409,7 @@
                         </button>
                     </div>
 
-                    <!-- Campo oculto donde se guardará la firma en base64 -->
-                    <!--<input type="hidden" name="firma" id="firma-data" required>
+                    
                 </div>
                 <div class="mt-6 text-xs text-gray-600 px-2">
                 <!-- CHECKBOX LOPD / Consentimiento -->

@@ -122,7 +122,8 @@ form.addEventListener('submit', function(e) {
         .then(() => {
             // Mensaje de éxito bonito
             showMessage('success', '¡Solicitud enviada con éxito! ✅<br>Te contactaremos pronto.');
-            //form.reset();
+            enviar();
+            form.reset();
         })
         .catch((error) => {
             // Mensaje de error
@@ -366,7 +367,7 @@ async function enviar() {
       body: JSON.stringify(data)
       });
       //dejar solo en desarrollo**************************************
-      alert("PRUEBA 1: Guardado en Google Sheets");
+      //alert("PRUEBA 1: Guardado en Google Sheets");
 
   } catch (error) {
       console.error(error);

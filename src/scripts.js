@@ -366,7 +366,7 @@ async function enviar() {
       method: "POST",
       body: JSON.stringify(data)
       });
-      console.log("GS_OK"
+      console.log("GS_OK");
   } catch (error) {
       console.error(error);
       alert("Error");

@@ -331,15 +331,47 @@ dniInput.addEventListener('change', function(e) {
     const reader = new FileReader();
 
     reader.onload = function(event) {
-        const base64 = event.target.result;
+        const img = new Image();
+        img.src = event.target.result;
 
-        // Guardar base64
-        base64Input.value = base64;
+        img.onload = function() {
 
-        // Mostrar preview
-        preview.src = base64;
-        previewContainer.classList.remove('hidden');
-        placeholder.classList.add('hidden');
+            const MAX_SIZE = 800;
+            let width = img.width;
+            let height = img.height;
+
+            // Mantener proporción
+            if (width > height) {
+                if (width > MAX_SIZE) {
+                    height = height * (MAX_SIZE / width);
+                    width = MAX_SIZE;
+                }
+            } else {
+                if (height > MAX_SIZE) {
+                    width = width * (MAX_SIZE / height);
+                    height = MAX_SIZE;
+                }
+            }
+
+            // Canvas para redimensionar
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Convertir a base64 comprimido
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+
+            // Guardar
+            base64Input.value = compressedBase64;
+
+            // Mostrar preview
+            preview.src = compressedBase64;
+            previewContainer.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+        };
     };
 
     reader.readAsDataURL(file);

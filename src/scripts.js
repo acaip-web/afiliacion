@@ -240,7 +240,7 @@ async function enviar() {
   };
 
   try {
-      await fetch("https://script.google.com/macros/s/AKfycbzZfrZ3Oy74dIOFMNgGIfaV_Q_zAR_zO_68xwJMxfNJM2gJ-by0oVDOHdOEWnIvo6-jJw/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycby-PbRtwxpcECvMYoP7a97N-qpDFZFJ0xvz5q-H-g4Ek7iFlfpguj3ZC4O8wp0L4lV9SQ/exec", {
       method: "POST",
       body: JSON.stringify(data)
       });
@@ -310,4 +310,37 @@ document.addEventListener('DOMContentLoaded', () => {
             saveSignature();        // actualizamos el input después de undo
         }
     });
+});
+// ====================== GUARDAR DNI ======================
+const dniInput = document.getElementById('dniFoto');
+const preview = document.getElementById('previewDni');
+const previewContainer = document.getElementById('dni-preview-container');
+const placeholder = document.getElementById('dni-placeholder');
+const base64Input = document.getElementById('dni-base64');
+
+dniInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Selecciona una imagen válida');
+        dniInput.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const base64 = event.target.result;
+
+        // Guardar base64
+        base64Input.value = base64;
+
+        // Mostrar preview
+        preview.src = base64;
+        previewContainer.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+    };
+
+    reader.readAsDataURL(file);
 });

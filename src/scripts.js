@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 // ====================== GUARDAR DNI ======================
-const dniInput = document.getElementById('dniFoto');
+/*const dniInput = document.getElementById('dniFoto');
 const preview = document.getElementById('previewDni');
 const previewContainer = document.getElementById('dni-preview-container');
 const placeholder = document.getElementById('dni-placeholder');
@@ -378,6 +378,194 @@ dniInput.addEventListener('change', function(e) {
             preview.src = compressedBase64;
             previewContainer.classList.remove('hidden');
             placeholder.classList.add('hidden');
+        };
+    };
+
+    reader.readAsDataURL(file);
+});*/
+
+//experimento dni
+
+
+
+function procesarDNIPro(imgElement, callback) {
+
+    let src = cv.imread(imgElement);
+    let gray = new cv.Mat();
+    let edged = new cv.Mat();
+    let contours = new cv.MatVector();
+    let hierarchy = new cv.Mat();
+
+    try {
+        cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+        cv.Canny(gray, edged, 75, 200);
+
+        cv.findContours(edged, contours, hierarchy, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE);
+
+        let best = null;
+        let maxArea = 0;
+
+        for (let i = 0; i < contours.size(); i++) {
+            let cnt = contours.get(i);
+            let area = cv.contourArea(cnt);
+
+            if (area > maxArea) {
+                let peri = cv.arcLength(cnt, true);
+                let approx = new cv.Mat();
+                cv.approxPolyDP(cnt, approx, 0.02 * peri, true);
+
+                if (approx.rows === 4) {
+                    best = approx;
+                    maxArea = area;
+                }
+            }
+        }
+
+        let canvas = document.createElement('canvas');
+
+        if (best) {
+            let pts = [];
+            for (let i = 0; i < 4; i++) {
+                pts.push({
+                    x: best.intPtr(i, 0)[0],
+                    y: best.intPtr(i, 0)[1]
+                });
+            }
+
+            // ordenar puntos
+            pts.sort((a, b) => a.y - b.y);
+            let top = pts.slice(0,2).sort((a,b)=>a.x-b.x);
+            let bottom = pts.slice(2,4).sort((a,b)=>a.x-b.x);
+            let ordered = [top[0], top[1], bottom[1], bottom[0]];
+
+            let width = 600;
+            let height = 380;
+
+            let srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
+                ordered[0].x, ordered[0].y,
+                ordered[1].x, ordered[1].y,
+                ordered[2].x, ordered[2].y,
+                ordered[3].x, ordered[3].y
+            ]);
+
+            let dstTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
+                0, 0,
+                width, 0,
+                width, height,
+                0, height
+            ]);
+
+            let M = cv.getPerspectiveTransform(srcTri, dstTri);
+            let dst = new cv.Mat();
+
+            cv.warpPerspective(src, dst, M, new cv.Size(width, height));
+            cv.imshow(canvas, dst);
+
+            srcTri.delete(); dstTri.delete(); M.delete(); dst.delete();
+
+        } else {
+            // fallback
+            cv.imshow(canvas, src);
+        }
+
+        callback(canvas);
+
+    } catch (err) {
+        console.error("OpenCV error:", err);
+        callback(null);
+    }
+
+    src.delete();
+    gray.delete();
+    edged.delete();
+    contours.delete();
+    hierarchy.delete();
+}
+
+
+const dniInput = document.getElementById('dniFoto');
+const preview = document.getElementById('previewDni');
+const previewContainer = document.getElementById('dni-preview-container');
+const placeholder = document.getElementById('dni-placeholder');
+const base64Input = document.getElementById('dni-base64');
+
+dniInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Selecciona una imagen válida');
+        dniInput.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function() {
+
+            // ⏳ Esperar a OpenCV
+            const wait = setInterval(() => {
+                if (window.cv && cv.imread) {
+                    clearInterval(wait);
+
+                    // 🔥 PROCESAR DNI
+                    procesarDNIPro(img, (processedCanvas) => {
+
+                        let finalCanvas;
+
+                        if (processedCanvas) {
+                            finalCanvas = processedCanvas;
+                        } else {
+                            // fallback → usar original
+                            finalCanvas = document.createElement('canvas');
+                            finalCanvas.width = img.width;
+                            finalCanvas.height = img.height;
+                            finalCanvas.getContext('2d').drawImage(img, 0, 0);
+                        }
+
+                        // 🔽 TU COMPRESIÓN ORIGINAL (800px + 0.7)
+                        const MAX_SIZE = 800;
+                        let width = finalCanvas.width;
+                        let height = finalCanvas.height;
+
+                        if (width > height) {
+                            if (width > MAX_SIZE) {
+                                height = height * (MAX_SIZE / width);
+                                width = MAX_SIZE;
+                            }
+                        } else {
+                            if (height > MAX_SIZE) {
+                                width = width * (MAX_SIZE / height);
+                                height = MAX_SIZE;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(finalCanvas, 0, 0, width, height);
+
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+
+                        // Guardar
+                        base64Input.value = compressedBase64;
+
+                        // UI (igual que ya tenías)
+                        preview.src = compressedBase64;
+                        previewContainer.classList.remove('hidden');
+                        placeholder.classList.add('hidden');
+
+                    });
+
+                }
+            }, 100);
+
         };
     };
 

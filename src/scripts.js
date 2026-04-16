@@ -121,7 +121,7 @@ form.addEventListener('submit', function(e) {
     showMessage('success', '¡Solicitud enviada con éxito! ✅<br>Te contactaremos pronto.');
     submitBtn.innerHTML = originalBtnText;
     submitBtn.disabled = false;
-    
+
     // Enviar con EmailJS
     /*emailjs.sendForm('service_04v84lc', 'template_qecdm6i', this)
         .then(() => {
@@ -214,6 +214,7 @@ inputDNI.addEventListener("input", () => {
 async function enviar() {
 
   const firmaBase64 = document.getElementById("firma-data").value || ""; //para la firma
+  const dniBase64 = document.getElementById("dni-base64").value || ""; //para la firma
   console.log(firmaBase64);
   const data = {
       nombre: document.getElementById("nombre").value,
@@ -241,7 +242,8 @@ async function enviar() {
       puesto_trabajo: document.getElementById("puesto_trabajo").value,
       fecha_alta: document.getElementById("fecha_alta").value,
       acepta_privacidad: document.getElementById("acepta_privacidad").value,
-      firma: firmaBase64
+      firma: firmaBase64,
+      dni_base64: dniBase64
   };
 
   try {

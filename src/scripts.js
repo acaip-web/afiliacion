@@ -240,7 +240,7 @@ async function enviar() {
   };
 
   try {
-      await fetch("https://script.google.com/macros/s/AKfycbw8N8W_BzN95Vr05aHBr1MWOAtcXgpHNSs0_VsMDEv3MYB15bvnaa0KqYPIhFU6hwN9qg/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbzZfrZ3Oy74dIOFMNgGIfaV_Q_zAR_zO_68xwJMxfNJM2gJ-by0oVDOHdOEWnIvo6-jJw/exec", {
       method: "POST",
       body: JSON.stringify(data)
       });

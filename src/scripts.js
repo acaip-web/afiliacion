@@ -118,11 +118,14 @@ form.addEventListener('submit', function(e) {
     submitBtn.disabled = true;
 
     enviar();
-    showMessage('success', '¡Solicitud enviada con éxito! ✅<br>Te contactaremos pronto.');
+    //TOAST DE ÉXITO
+    setTimeout(() => {
+        showToast();
+    }, 1000);
+    //showMessage('success', '¡Solicitud enviada con éxito! ✅<br>Te contactaremos pronto.');
     submitBtn.innerHTML = originalBtnText;
     submitBtn.disabled = false;
-    //TOAST DE ÉXITO
-    showToast();
+    
 
     // Enviar con EmailJS
     /*emailjs.sendForm('service_04v84lc', 'template_qecdm6i', this)

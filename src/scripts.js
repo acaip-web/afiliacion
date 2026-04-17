@@ -265,7 +265,7 @@ async function enviar() {
       ano_ingreso: document.getElementById("ano_ingreso").value,
       tipo_personal: document.querySelector('input[name="tipo_personal"]:checked')?.value || "",
       grupo: document.querySelector('input[name="grupo"]:checked')?.value || "",
-      en_practicas: document.getElementById("en_practicas").value,
+      en_practicas: document.getElementById("en_practicas").checked,
       grado_consolidado: document.getElementById("grado_consolidado").value,
       puesto_trabajo: document.getElementById("puesto_trabajo").value,
       fecha_alta: document.getElementById("fecha_alta").value,

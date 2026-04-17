@@ -1,26 +1,24 @@
-# afiliacion
-https://delegado-castellon.github.io/afiliacion/
-Experimentos con gaseosa
 # 📋 Formulario de Afiliación
 
-Este proyecto consiste en el desarrollo de un **formulario de afiliación web moderno, funcional y responsive**, diseñado para facilitar el registro de nuevos usuarios de forma rápida, segura y organizada.
+Este proyecto consiste en el desarrollo de un **formulario de afiliación web moderno, funcional y responsive**, diseñado para facilitar el registro de nuevos usuarios de forma rápida, clara y eficiente.
 
 ---
 
 ## 🚀 Objetivo del proyecto
 
-El objetivo principal es proporcionar una interfaz sencilla e intuitiva que permita a los usuarios completar su solicitud de afiliación en pocos pasos, garantizando al mismo tiempo una estructura de datos clara para su posterior gestión.
+El objetivo principal es simplificar el proceso de afiliación mediante una interfaz intuitiva que permita recoger datos de forma estructurada y enviarlos automáticamente a una hoja de cálculo de Google Sheets para su gestión.
 
 ---
 
 ## 🧩 Funcionalidades principales
 
-- 🧾 Formulario de registro estructurado por secciones
-- ✅ Validación de campos en tiempo real
-- 📱 Diseño totalmente responsive (adaptado a móvil, tablet y escritorio)
-- 🔒 Control básico de datos introducidos por el usuario
-- 💾 Preparado para integración con backend o almacenamiento de datos
-- 🎨 Interfaz limpia y moderna con enfoque UX/UI
+- 🧾 Formulario de registro dividido por secciones
+- ⚡ Validación de campos en tiempo real
+- 📱 Diseño completamente responsive
+- 🎨 Interfaz moderna con estilos optimizados
+- 📤 Envío automático de datos a Google Sheets
+- 🔗 Integración con Google Apps Script
+- 🧠 Preparado para futuras ampliaciones (login, panel admin, etc.)
 
 ---
 
@@ -28,27 +26,19 @@ El objetivo principal es proporcionar una interfaz sencilla e intuitiva que perm
 
 - HTML5
 - CSS3
+- 🎨 Tailwind CSS
 - JavaScript (vanilla)
-- (Opcional) Integración con backend en Node.js
+- Google Apps Script (GS)
+- Google Sheets como base de datos
 
 ---
 
-## 🎯 Mejoras futuras
+## 🔗 Integración con Google Sheets
 
-- Autenticación de usuarios
-- Envío de datos a base de datos
-- Panel de administración de afiliados
-- Exportación de registros a CSV o Excel
-- Notificaciones automáticas de alta
+El formulario está conectado a una hoja de cálculo mediante **Google Apps Script**, lo que permite almacenar automáticamente cada envío como una nueva fila en la hoja.
 
----
+### 📌 Flujo de datos:
+Formulario → JavaScript → Google Apps Script → Google Sheets
 
-## 💡 Notas
 
-Este proyecto forma parte de un sistema más amplio de gestión de usuarios/afiliaciones, orientado a optimizar el control y seguimiento de registros de manera digital.
-
----
-
-## 👨‍💻 Autor
-
-Desarrollado como parte de un proyecto personal para la gestión de formularios web.
+dev38lolo

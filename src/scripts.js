@@ -107,26 +107,46 @@ renderCentros(centros);
 const form = document.getElementById('afiliacion-form');
 const submitBtn = form.querySelector('button[type="submit"]');
 let originalBtnText = submitBtn.innerHTML;
-
+/*
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     // Cambiar botón a "Enviando..."
-    submitBtn.innerHTML = `
-        <i class="fas fa-spinner fa-spin"></i> Enviando solicitud...
-    `;
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Enviando solicitud...`;
     submitBtn.disabled = true;
 
-    enviar();
-    //TOAST DE ÉXITO
     setTimeout(() => {
         showMessage('success', '¡Solicitud enviada con éxito! ✅<br>Te contactaremos pronto.');
     }, 1000);
+
+    enviar();
     
     submitBtn.innerHTML = originalBtnText;
     submitBtn.disabled = false;
-    form.reset();
+    form.reset();*/
     
+    form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Enviando solicitud...`;
+    submitBtn.disabled = true;
+
+    try {
+        await enviar(); // 👈 ESPERA REAL
+
+        showMessage('success', '¡Solicitud enviada con éxito! ✅<br>Te contactaremos pronto.');
+
+        form.reset();
+
+    } catch (error) {
+        showMessage('error', 'Error al enviar la solicitud ❌');
+    }
+
+    submitBtn.innerHTML = originalBtnText;
+    submitBtn.disabled = false;
+
+
+
 
     // Enviar con EmailJS
     /*emailjs.sendForm('service_04v84lc', 'template_qecdm6i', this)
@@ -237,7 +257,9 @@ async function enviar() {
       piso: document.getElementById("piso").value,
       letra_puerta: document.getElementById("letra_puerta").value,
       codigo_postal: document.getElementById("codigo_postal").value,
+      localidad: document.getElementById("localidad").value,
       provincia: document.getElementById("provincia").value,
+      provincia_fiscal: document.getElementById("provincia_fiscal").value,
       tipo_cuota: document.querySelector('input[name="tipo_cuota"]:checked')?.value || "",
       centro_penitenciario: document.getElementById("centro-value").value || "",
       ano_ingreso: document.getElementById("ano_ingreso").value,
@@ -253,7 +275,7 @@ async function enviar() {
   };
 
   try {
-      await fetch("https://script.google.com/macros/s/AKfycby-PbRtwxpcECvMYoP7a97N-qpDFZFJ0xvz5q-H-g4Ek7iFlfpguj3ZC4O8wp0L4lV9SQ/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbyzSB0cg0wRty2MW0aRcR5ELPaDWVQlw7EAm8uC51hWWP7d_q1xmkZ_igCSn2IkauiX5A/exec", {
       method: "POST",
       body: JSON.stringify(data)
       });
@@ -389,19 +411,3 @@ dniInput.addEventListener('change', function(e) {
 
     reader.readAsDataURL(file);
 });
-
-// TOAST DE ÉXITO
-
-const toast = document.getElementById('toastBox');
-
-function showToast() {
-    // Mostrar
-    toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'scale-95');
-    toast.classList.add('opacity-100', 'translate-y-0', 'scale-100');
-
-    // Ocultar después
-    setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
-        toast.classList.add('opacity-0', 'translate-y-[-20px]', 'scale-95');
-    }, 2500);
-}

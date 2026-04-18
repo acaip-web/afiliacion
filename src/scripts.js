@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('signature-canvas');
     
     signaturePad = new SignaturePad(canvas, {
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgba(0,0,0,0)', // Transparente
         penColor: '#1e40af',
         minWidth: 1.2,
         maxWidth: 3.5,
@@ -304,13 +304,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para redimensionar el canvas correctamente
     function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        
+        // 1. Guardamos lo que el usuario ya dibujó
+        const oldData = signaturePad.toData(); 
+
+        // 2. Redimensionamos
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
-        canvas.getContext('2d').scale(ratio, ratio);
-        signaturePad.clear();
+        canvas.getContext("2d").scale(ratio, ratio);
+
+        // 3. Limpiamos y volvemos a cargar los datos para que se ajusten al nuevo tamaño
+        signaturePad.clear(); 
+        signaturePad.fromData(oldData); 
     }
 
-    window.addEventListener('resize', resizeCanvas);
+    let lastWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+        // Solo redimensiona si cambia el ancho (ignora cambios de altura por teclado/barras en móvil)
+        if (window.innerWidth !== lastWidth) {
+            lastWidth = window.innerWidth;
+            resizeCanvas();
+        }
+    });
     resizeCanvas();
 
     // ====================== GUARDAR FIRMA ======================

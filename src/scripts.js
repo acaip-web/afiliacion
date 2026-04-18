@@ -243,9 +243,9 @@ async function enviar() {
   const dniBase64 = document.getElementById("dni-base64").value || ""; //para la firma
   console.log(firmaBase64);
   const data = {
-      nombre: document.getElementById("nombre").value,
-      apellido1: document.getElementById("apellido1").value,
-      apellido2: document.getElementById("apellido2").value,
+      nombre: document.getElementById("nombre")?.value?.toUpperCase() || "",
+      apellido1: document.getElementById("apellido1")?.value?.toUpperCase() || "",
+      apellido2: document.getElementById("apellido2")?.value?.toUpperCase() || "",
       sexo: document.querySelector('input[name="sexo"]:checked')?.value || "",
       ano_nacimiento: document.getElementById("ano_nacimiento").value,
       nif: document.getElementById("nif").value,

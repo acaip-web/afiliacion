@@ -250,7 +250,7 @@ async function enviar() {
 
   const firmaBase64 = document.getElementById("firma-data").value || ""; //para la firma
   const dniBase64 = document.getElementById("dni-base64").value || ""; //para la firma
-  console.log(firmaBase64);
+  console.log("Longitud: " + firmaBase64.length);
   const data = {
       nombre: document.getElementById("nombre")?.value?.toUpperCase() || "",
       apellido1: document.getElementById("apellido1")?.value?.toUpperCase() || "",
@@ -284,7 +284,7 @@ async function enviar() {
   };
 
   try {
-      await fetch("https://script.google.com/macros/s/AKfycbwEyKN_BYoFTZRI6PMfhyfIYfnmiiSevlb9HzQ-RVDpXW81oZwynhuUXkaTkHUwaQgI/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbzRbSnFgV2C8d-0ld2MFVcWn98nqNONjAWO0GC0FHxmZenxfMvsx2NX1ukLdUEnJrM0/exec", {
       method: "POST",
       body: JSON.stringify(data)
       });

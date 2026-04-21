@@ -188,7 +188,7 @@ function showMessage(type, message) {
         // --- REDIRECCIÓN ---
         // Esperamos 1.5 segundos para que el usuario lea el mensaje y luego redirigimos
         setTimeout(() => {
-            window.location.replace = 'gracias.html';
+            window.location.href = 'gracias.html';
         }, 1500);
 
     } else {

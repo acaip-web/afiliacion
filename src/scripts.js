@@ -445,7 +445,7 @@ const shareBtn = document.getElementById('shareBtn');
                 text: 'Compañero, únete al sindicato mayoritario de prisiones. ¡La unión hace la fuerza!',
                 url: window.location.origin + '/index.html' // Asume que el formulario está en index.html
             };
-
+            console.log(shareData.url);
             try {
                 if (navigator.share) {
                     await navigator.share(shareData);

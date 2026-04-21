@@ -444,8 +444,17 @@ let tiempoInicio;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Registramos la hora de inicio en milisegundos
-    tiempoInicio = Date.now();
-    console.log("Cronómetro iniciado...");
+    
+    // Cambia la lógica de inicio por esta:
+    const iniciarAlTocar = () => {
+        tiempoInicio = Date.now();
+        console.log("Cronómetro iniciado...");
+        // Eliminamos el evento para que no se reinicie el tiempo en cada click
+        document.removeEventListener('focusin', iniciarAlTocar);
+    };
+    document.addEventListener('focusin', iniciarAlTocar);
+
+
 
     const formulario = document.querySelector('form');
     

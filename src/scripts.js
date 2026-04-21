@@ -280,7 +280,8 @@ async function enviar() {
       fecha_alta: document.getElementById("fecha_alta").value,
       acepta_privacidad: document.getElementById("acepta_privacidad").value,
       firma: firmaBase64,
-      dni_base64: dniBase64
+      dni_base64: dniBase64,
+      tiempo_fin: document.getElementById("tiempo_fin").value
   };
 
   try {
@@ -436,3 +437,30 @@ dniInput.addEventListener('change', function(e) {
     reader.readAsDataURL(file);
 });
 
+// CRONÓMETRO
+
+// Variable para guardar el momento de inicio
+let tiempoInicio;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Registramos la hora de inicio en milisegundos
+    tiempoInicio = Date.now();
+    console.log("Cronómetro iniciado...");
+
+    const formulario = document.querySelector('form');
+    
+    if (formulario) {
+        formulario.addEventListener('submit', () => {
+            // Calculamos la hora de fin
+            const tiempoFin = Date.now();
+            
+            // Calculamos la diferencia en segundos
+            const diferenciaSegundos = Math.round((tiempoFin - tiempoInicio) / 1000);
+            
+            // Guardamos el valor en el input oculto antes de que se envíe
+            document.getElementById('tiempo_fin').value = diferenciaSegundos;
+            
+            console.log(`Formulario completado en: ${diferenciaSegundos} segundos`);
+        });
+    }
+});

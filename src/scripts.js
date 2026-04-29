@@ -191,7 +191,7 @@ async function enviar() {
 
   // FIX: se elimina el alert() y se deja que el error burbujee al submit
   const response = await fetch(
-    "https://script.google.com/macros/s/AKfycbwPTzG9SzXNpu8gcukGKbe9-tGACpQe4LTfrfOJbmXceB7lildStzhFiJy1w72PA8J47g/exec",
+    "https://script.google.com/macros/s/AKfycbyoyzG29U5HKbW6w0zqkBEGiKwffLVSq_aLQGgYGHWn4lil1vewAMBaSCE46seI3wb4gw/exec",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -190,12 +190,15 @@ async function enviar() {
   };
 
   // FIX: se elimina el alert() y se deja que el error burbujee al submit
+
+  const formData = new FormData();
+  formData.append("payload", JSON.stringify(data));
   const response = await fetch(
-    "https://script.google.com/macros/s/AKfycbyoyzG29U5HKbW6w0zqkBEGiKwffLVSq_aLQGgYGHWn4lil1vewAMBaSCE46seI3wb4gw/exec",
+    "https://script.google.com/macros/s/AKfycbzFZpIOXUgPQvLilkNSwcMzOXMCqvKDQCzwmLQRkWpQdJI4BsS_ha0fiqR52OLN0wkF9w/exec",
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      //body: JSON.stringify(data)
+      body: formData
     }
   );
 

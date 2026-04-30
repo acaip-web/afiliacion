@@ -153,6 +153,7 @@ function validarFormulario() {
 
 // ==================== ENVÍO A GOOGLE SHEETS ====================
 async function enviar() {
+  
   const firmaBase64 = document.getElementById("firma-data").value || "";
   const dniBase64 = document.getElementById("dni-base64").value || "";
 

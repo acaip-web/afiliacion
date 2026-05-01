@@ -370,39 +370,7 @@ fotoDniInput.addEventListener('change', function (e) {
   reader.readAsDataURL(file);
 });
 
-//Validación directa dni
-/*function validarDNI(dni) {
-  const letras = "TRWAGMYFPDXBNJZSQVHLCKE";
-  const regex = /^[0-9]{8}[A-Z]$/;
-  dni = dni.toUpperCase();
-  if (!regex.test(dni)) return false;
-  const numero = dni.substring(0, 8);
-  const letra = dni.charAt(8);
-  return letra === letras[numero % 23];
-}
-
-const inputDNI = document.getElementById("nif");
-const errorDNI = document.getElementById("dni-error");
-
-inputDNI.addEventListener("input", () => {
-  inputDNI.value = inputDNI.value.toUpperCase().replace(/[^0-9A-Z]/g, "");
-  const dni = inputDNI.value;
-  if (dni.length === 9) {
-    if (validarDNI(dni)) {
-      errorDNI.classList.add("opacity-0");
-      inputDNI.classList.remove("border-red-500");
-      inputDNI.classList.add("border-green-500");
-    } else {
-      errorDNI.classList.remove("opacity-0");
-      inputDNI.classList.add("border-red-500");
-      inputDNI.classList.remove("border-green-500");
-    }
-  } else {
-    errorDNI.classList.add("opacity-0");
-    inputDNI.classList.remove("border-red-500", "border-green-500");
-  }
-});*/
-
+//validación del DNI
 const dniInput = document.getElementById("nif");
 
 function validarDNI(dni) {
@@ -416,7 +384,7 @@ function validarDNI(dni) {
 
   return "";
 }
-
+/*
 // 🔥 validación al perder foco (modo nativo real)
 dniInput.addEventListener("blur", () => {
   let dni = dniInput.value.toUpperCase().trim();
@@ -445,4 +413,36 @@ dniInput.addEventListener("input", () => {
   dniInput.setCustomValidity("");
   dniInput.classList.remove("border-red-500");
   dniInput.classList.remove("border-green-500");
+});*/
+function setEstado(input, valido, mensaje = "") {
+  input.classList.remove("border-red-500", "border-green-500");
+
+  if (valido === true) {
+    input.classList.add("border-green-500");
+    input.setCustomValidity("");
+  } else if (valido === false) {
+    input.setCustomValidity(mensaje);
+  }
+}
+
+dniInput.addEventListener("blur", () => {
+  let dni = dniInput.value.toUpperCase().trim();
+  dniInput.value = dni;
+
+  if (!dni) return;
+
+  const error = validarDNI(dni);
+
+  if (error) {
+    setEstado(dniInput, false, error);
+    dniInput.reportValidity();
+  } else {
+    setEstado(dniInput, true);
+  }
+});
+
+dniInput.addEventListener("input", () => {
+  // mientras escribe: solo limpieza visual
+  dniInput.classList.remove("border-red-500", "border-green-500");
+  dniInput.setCustomValidity("");
 });

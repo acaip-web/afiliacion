@@ -167,19 +167,13 @@ async function enviar() {
     grado_consolidado:   document.getElementById("grado_consolidado").value,
     puesto_trabajo:      document.getElementById("puesto_trabajo").value,
     fecha_alta:          document.getElementById("fecha_alta").value,
-    acepta_privacidad:   document.getElementById("acepta_privacidad").value,
+    acepta_privacidad:   document.getElementById("acepta_privacidad").checked,
     firma:               firmaBase64,
     dni_base64:          dniBase64,
     tiempo_fin:          document.getElementById("tiempo_fin").value
   };
 
-  // FIX: se elimina el alert() y se deja que el error burbujee al submit
-
-  //const formData = new FormData();
-  //formData.append("payload", JSON.stringify(data));
-  //formData.append("token", "S3cr3tAcaip2026_XYZ_91");
-  
-const formData = new FormData();
+  const formData = new FormData();
   formData.append("payload", JSON.stringify(data));
   formData.append("token", "S3cr3tAcaip2026_XYZ_91");
   const response = await fetch(
@@ -387,36 +381,7 @@ function validarDNI(dni) {
 
   return "";
 }
-/*
-// 🔥 validación al perder foco (modo nativo real)
-dniInput.addEventListener("blur", () => {
-  let dni = dniInput.value.toUpperCase().trim();
-  dniInput.value = dni;
 
-  dniInput.setCustomValidity("");
-
-  if (!dni) return; // required ya se encarga
-
-  const error = validarDNI(dni);
-
-  if (error) {
-    dniInput.classList.remove("border-green-500");
-    dniInput.classList.add("border-red-500");
-    dniInput.setCustomValidity(error);
-    dniInput.reportValidity();
-    dniInput.classList.remove("border-green-500");
-    dniInput.classList.add("border-red-500");
-  }else{
-    dniInput.classList.remove("border-red-500");
-    dniInput.classList.add("border-green-500");
-  }
-});
-
-dniInput.addEventListener("input", () => {
-  dniInput.setCustomValidity("");
-  dniInput.classList.remove("border-red-500");
-  dniInput.classList.remove("border-green-500");
-});*/
 function setEstado(input, valido, mensaje = "") {
   input.classList.remove("border-red-500", "border-green-500");
 
